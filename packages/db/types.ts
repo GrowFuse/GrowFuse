@@ -44,7 +44,15 @@ export type user = {
   created_at: Generated<Timestamp>;
   updated_at: Timestamp;
   name: string;
-  email: string;
+  email: string | null;
+  username: string | null;
+  image: string | null;
+  github_id: number | null;
+};
+export type user_session = {
+  id: Generated<string>;
+  expires_at: Timestamp;
+  user_id: string;
 };
 export type DB = {
   member_roles: member_roles;
@@ -54,4 +62,5 @@ export type DB = {
   role: role;
   role_permission: role_permission;
   user: user;
+  user_session: user_session;
 };

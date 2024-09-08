@@ -9,7 +9,7 @@ generator kysely {
 
   // Optionally provide a destination directory for the generated file
   // and a filename of your choice
-  output   = "../db"
+  output   = "../"
   fileName = "types.ts"
 
   // Optionally generate runtime enums to a separate file
@@ -26,9 +26,22 @@ model user {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   name       String
-  email      String
+  email      String?
+  username   String?
+  image      String?
+  github_id  Int?
 
-  accounts organization_member[]
+  accounts     organization_member[]
+  user_session user_session[]
+}
+
+model user_session {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  expires_at DateTime
+
+  user user @relation(fields: [user_id], references: [id])
+
+  user_id String @db.Uuid
 }
 
 model organization {

@@ -1,5 +1,5 @@
 {
-  "name": "GrowFuse",
+  "name": "growfuse",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -16,7 +16,8 @@
     "lint:repo": "bunx sherif@latest",
     "lint:repo:fix": "bunx sherif@latest --fix",
     "typecheck": "turbo typecheck",
-    "ui:add": "bun --filter @growfuse/ui ui:add"
+    "ui:add": "bun --filter=@growfuse/ui ui:add",
+    "db:push": "bun --filter=@growfuse/db db:push"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
@@ -34,6 +35,13 @@
     "tooling/*"
   ],
   "trustedDependencies": [
-    "@biomejs/biome"
-  ]
+    "@biomejs/biome",
+    "@prisma/engines",
+    "@swc/core",
+    "esbuild",
+    "prisma"
+  ],
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
 }

@@ -3,20 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "echo 'Add dev script here'",
-    "build": "echo 'Add build script here'",
-    "test": "echo 'Add test script here'",
-    "lint": "echo 'Add lint script here'"
+    "db:push": "prisma db push"
   },
   "main": "./index.ts",
-  "types": "./types.ts",
   "dependencies": {
     "kysely": "^0.27.4",
     "pg": "^8.12.0"
   },
   "devDependencies": {
-    "prisma": "^5.19.1",
     "@types/pg": "^8.11.8",
+    "prisma": "^5.19.1",
     "prisma-kysely": "^1.8.0"
   }
 }
