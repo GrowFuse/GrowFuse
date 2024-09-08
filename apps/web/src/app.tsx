@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import { Button } from "@growfuse/ui/components/button";
 import { Route, Routes } from "react-router-dom";
-import Page1 from "./pages/page-1";
-import Page2 from "./pages/page-2";
-import LandingPage from "./pages/landing-page";
+import LandingPage from "~/pages/landing-page";
+import Page1 from "~/pages/page-1";
+import Page2 from "~/pages/page-2";
 
 function App() {
-  const [count, setCount] = useState(2);
-
-  useEffect(() => {}, []);
-
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />

@@ -45,7 +45,7 @@
     "prisma"
   ],
   "dependencies": {
-    "@trpc/server": "^11.0.0-rc.502",
+    "@trpc/server": "next",
     "arctic": "^1.9.2",
     "hono": "^4.5.11",
     "superjson": "^2.2.1",

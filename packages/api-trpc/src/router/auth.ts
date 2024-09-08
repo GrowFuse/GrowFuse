@@ -1,5 +1,5 @@
 import { setCookie } from "hono/cookie";
-import { createTRPCRouter, publicProcedure } from "#index";
+import { createTRPCRouter, publicProcedure } from "../index";
 import { createAuthorizationURL } from "auth/github";
 import { generateState } from "arctic";
 

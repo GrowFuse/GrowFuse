@@ -3,14 +3,11 @@ import { authFactory } from "../index";
 import { OAuth2RequestError } from "arctic";
 import { getCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
-import { env } from "env";
-import {
-  getGitHubUser,
-  validateAuthorizationCode,
-} from "auth/github";
+import { env } from "~/env";
+import { getGitHubUser, validateAuthorizationCode } from "auth/github";
 import { createSession, createSessionCookie } from "auth";
 
-export const githubCallback = authFactory.createHandlers(async (c) => {
+export const githubCallback = createHandlers(async (c) => {
   const code = c.req.query("code");
   const state = c.req.query("state");
   const storedState = getCookie(c, "github_oauth_state") ?? null;

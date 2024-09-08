@@ -1,9 +1,8 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import type { createContext } from "#context";
-import superjson from "superjson";
+import SuperJSON from "superjson";
 import { ZodError } from "zod";
 import { validateSession } from "auth";
-import { authRouter } from "#router/auth";
 
 /**
  * Initialization of tRPC backend
@@ -11,7 +10,7 @@ import { authRouter } from "#router/auth";
  */
 
 const t = initTRPC.context<typeof createContext>().create({
-  transformer: superjson,
+  transformer: SuperJSON,
   errorFormatter({ shape, error }) {
     return {
       ...shape,
@@ -46,9 +45,3 @@ export const createTRPCRouter = t.router;
 
 export const publicProcedure = t.procedure;
 export const authenticatedProcedure = t.procedure.use(authMiddleware);
-
-export const appRouter = createTRPCRouter({
-  auth: authRouter,
-});
-
-export type AppRouter = typeof appRouter;

@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@trpc/client": "^11.0.0-rc.502",
+    "@tanstack/react-query": "^5.55.2",
+    "@trpc/client": "next",
+    "@trpc/react-query": "next",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "ui": "workspace:*",
     "react-router-dom": "^6.26.1",
+    "ui": "workspace:*",
     "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
@@ -21,7 +23,6 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "api-trpc": "workspace:*",
-    "globals": "^15.9.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.1"
   }

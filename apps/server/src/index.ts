@@ -1,14 +1,18 @@
 import { trpcServer } from "@hono/trpc-server";
 import { Hono } from "hono";
-import authApp from "modules/auth";
-import { appRouter } from "api-trpc";
+import authApp from "~/modules/auth";
+import { appRouter } from "api-trpc/router";
 import { createContext } from "api-trpc/context";
 import { db } from "db";
+import { cors } from "hono/cors";
 
 // load .env and verify
-await import("env");
+await import("~/env");
 
 const app = new Hono();
+
+app.use(cors());
+
 app.use(
   "/trpc/*",
   trpcServer({

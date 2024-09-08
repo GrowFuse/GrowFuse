@@ -22,19 +22,19 @@ services:
       - "1025:1025" # SMTP server
       - "8025:8025" # Web UI to view emails
 
-  hono:
-    image: oven/bun:latest
-    container_name: growuse_hono
-    working_dir: /backend # Set working directory to /backend
-    volumes:
-      - ./apps/server:/backend # Mount the project directory to /backend
-    command: bun run --hot src/index.ts # Run the development server with hot reloading
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-    env_file:
-      - .env
+  # hono:
+  #   image: oven/bun:latest
+  #   container_name: growuse_hono
+  #   working_dir: /backend # Set working directory to /backend
+  #   volumes:
+  #     - ./apps/server:/backend # Mount the project directory to /backend
+  #   command: bun run --hot src/index.ts # Run the development server with hot reloading
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - postgres
+  #   env_file:
+  #     - .env
 
 volumes:
   postgres_data:

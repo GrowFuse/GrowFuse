@@ -25,7 +25,8 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "#*": ["../../packages/api-trpc/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.js"],

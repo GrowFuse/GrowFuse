@@ -4,21 +4,17 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
+    "./router": "./src/router/index.ts",
     "./context": "./src/context.ts"
   },
   "dependencies": {
     "auth": "*",
     "db": "*",
-    "email": "*",
-    "superjson": "^2.2.1"
+    "email": "*"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "typescript": "*"
+    "typescript": "^5.5.4"
   },
-  "peerDependencies": {
-    "arctic": "^1.9.2",
-    "typescript": "^5.0.0"
-  },
-  "type": "module"
+  "peerDependencies": {}
 }

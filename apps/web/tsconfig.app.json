@@ -22,8 +22,9 @@
 
     "baseUrl": ".",
     "paths": {
+      "~/*": ["./src/*"],
       "@/*": ["../../packages/ui/src/*"],
-      "~/*": ["./src/*"]
+      "#*": ["../../packages/api-trpc/src/*"]
     }
   },
   "include": ["src"]
