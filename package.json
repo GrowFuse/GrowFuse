@@ -6,24 +6,27 @@
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
     "dev": "turbo dev --parallel",
-    "dev:web": "turbo dev --filter=@growfuse/web",
-    "dev:server": "turbo dev --filter=@growfuse/server",
-    "start:web": "turbo start --filter=@growfuse/web",
-    "start:server": "turbo start --filter=@growfuse/server",
+    "dev:web": "turbo dev --filter=web",
+    "dev:server": "turbo dev --filter=server",
+    "start:web": "turbo start --filter=web",
+    "start:server": "turbo start --filter=server",
     "test": "turbo test --parallel",
     "format": "biome format --write .",
     "lint": "turbo lint && bun lint:repo",
     "lint:repo": "bunx sherif@latest",
     "lint:repo:fix": "bunx sherif@latest --fix",
     "typecheck": "turbo typecheck",
-    "ui:add": "bun --filter=@growfuse/ui ui:add",
-    "db:push": "bun --filter=@growfuse/db db:push"
+    "ui:add": "bun --filter=ui ui:add",
+    "db:push": "bun --filter=db db:push"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "turbo": "^2.1.1",
     "typescript": "^5.5.4",
-    "vite-plugin-biome": "^1.0.12"
+    "vite-plugin-biome": "^1.0.12",
+    "tailwindcss": "^3.4.10",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.43"
   },
   "engines": {
     "node": ">=18"
@@ -42,6 +45,13 @@
     "prisma"
   ],
   "dependencies": {
-    "zod": "^3.23.8"
+    "@trpc/server": "^11.0.0-rc.502",
+    "arctic": "^1.9.2",
+    "hono": "^4.5.11",
+    "superjson": "^2.2.1",
+    "zod": "^3.23.8",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "lucia": "^3.2.0"
   }
 }

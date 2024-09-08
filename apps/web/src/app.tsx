@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button } from "@growfuse/ui/components/button";
+import { Button } from "ui/components/button";
+import { trpcClient } from "./trpc/client";
 
 function App() {
   const [count, setCount] = useState(2);
+
+  useEffect(() => {}, []);
 
   return (
     <div className="mx-auto p-5">

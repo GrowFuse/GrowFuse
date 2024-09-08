@@ -1,5 +1,5 @@
 {
-  "name": "@growfuse/db",
+  "name": "db",
   "version": "0.0.0",
   "private": true,
   "scripts": {

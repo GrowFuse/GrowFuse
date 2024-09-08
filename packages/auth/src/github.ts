@@ -8,30 +8,24 @@ interface GitHubUser {
   email: string | null;
 }
 
-export class GitHubAuthService {
-  private _github: GitHub;
-  private _githubApiUrl = "https://api.github.com";
+const _github: GitHub = new GitHub(
+  Bun.env.GITHUB_CLIENT_ID!,
+  Bun.env.GITHUB_CLIENT_SECRET!,
+);
+const _githubApiUrl = "https://api.github.com";
 
-  constructor() {
-    this._github = new GitHub(
-      Bun.env.GITHUB_CLIENT_ID!,
-      Bun.env.GITHUB_CLIENT_SECRET!,
-    );
-  }
+export async function createAuthorizationURL(state: string) {
+  return await _github.createAuthorizationURL(state);
+}
 
-  async createAuthorizationURL(state: string) {
-    return await this._github.createAuthorizationURL(state);
-  }
+export async function validateAuthorizationCode(code: string) {
+  return await _github.validateAuthorizationCode(code);
+}
 
-  async validateAuthorizationCode(code: string) {
-    return await this._github.validateAuthorizationCode(code);
-  }
-
-  async getGitHubUser(token: string): Promise<GitHubUser> {
-    return (await (
-      await fetch(`${this._githubApiUrl}/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-    ).json()) satisfies GitHubUser;
-  }
+export async function getGitHubUser(token: string): Promise<GitHubUser> {
+  return (await (
+    await fetch(`${_githubApiUrl}/user`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  ).json()) satisfies GitHubUser;
 }

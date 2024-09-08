@@ -1,5 +1,5 @@
 {
-  "extends": "@growfuse/typescript/react-library.json",
+  "extends": "typescript/react-library.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

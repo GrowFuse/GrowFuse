@@ -1,0 +1,24 @@
+{
+  "name": "api-trpc",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./context": "./src/context.ts"
+  },
+  "dependencies": {
+    "auth": "*",
+    "db": "*",
+    "email": "*",
+    "superjson": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "*"
+  },
+  "peerDependencies": {
+    "arctic": "^1.9.2",
+    "typescript": "^5.0.0"
+  },
+  "type": "module"
+}
