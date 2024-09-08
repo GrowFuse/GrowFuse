@@ -3,14 +3,26 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
+    "dev": "turbo dev --parallel",
+    "dev:web": "turbo dev --filter=@growfuse/web",
+    "dev:server": "turbo dev --filter=@growfuse/server",
+    "start:web": "turbo start --filter=@growfuse/web",
+    "start:server": "turbo start --filter=@growfuse/server",
+    "test": "turbo test --parallel",
+    "format": "biome format --write .",
+    "lint": "turbo lint && bun lint:repo",
+    "lint:repo": "bunx sherif@latest",
+    "lint:repo:fix": "bunx sherif@latest --fix",
+    "typecheck": "turbo typecheck",
+    "ui:add": "bun --filter @growfuse/ui ui:add"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "@biomejs/biome": "1.8.3",
     "turbo": "^2.1.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4",
+    "vite-plugin-biome": "^1.0.12"
   },
   "engines": {
     "node": ">=18"
@@ -18,6 +30,10 @@
   "packageManager": "bun@1.1.26",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "tooling/*"
+  ],
+  "trustedDependencies": [
+    "@biomejs/biome"
   ]
 }

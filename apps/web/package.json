@@ -1,27 +1,28 @@
 {
-  "name": "web",
-  "version": "0.1.0",
+  "name": "@growfuse/web",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "next": "14.2.6",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite-tsconfig-paths": "^5.0.1",
+    "@growfuse/ui": "workspace:*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.6",
-    "typescript": "^5"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.43",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
   }
 }

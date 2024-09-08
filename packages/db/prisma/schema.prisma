@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator kysely {
+  provider = "prisma-kysely"
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output   = "../db"
+  fileName = "types.ts"
+
+  // Optionally generate runtime enums to a separate file
+  enumFileName = "enums.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
+  email      String
+
+  accounts organization_member[]
+}
+
+model organization {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
+
+  members organization_member[]
+  roles   role[]
+}
+
+model organization_member {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user         user         @relation(fields: [user_id], references: [id])
+  organization organization @relation(fields: [organization_id], references: [id])
+
+  user_id         String         @db.Uuid
+  organization_id String         @db.Uuid
+  member_roles    member_roles[]
+
+  @@unique([user_id, organization_id])
+}
+
+model role {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
+
+  organization     organization      @relation(fields: [organization_id], references: [id])
+  role_permissions role_permission[]
+
+  organization_id String         @db.Uuid
+  member_roles    member_roles[]
+}
+
+model permission {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
+
+  role_permissions role_permission[]
+}
+
+model role_permission {
+  role       role       @relation(fields: [role_id], references: [id])
+  permission permission @relation(fields: [permission_id], references: [id])
+
+  role_id       String @db.Uuid
+  permission_id String @db.Uuid
+
+  @@id([role_id, permission_id])
+}
+
+model member_roles {
+  role                role                @relation(fields: [role_id], references: [id])
+  organization_member organization_member @relation(fields: [organization_member_id], references: [id])
+
+  role_id                String @db.Uuid
+  organization_member_id String @db.Uuid
+
+  @@id([role_id, organization_member_id])
+}
