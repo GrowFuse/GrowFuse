@@ -1,5 +1,15 @@
 {
   "name": "GrowFuse",
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "turbo": "^2.1.1",
+    "typescript": "^5.5.4",
+    "vite-plugin-biome": "^1.0.12"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.1.26",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -18,22 +28,12 @@
     "typecheck": "turbo typecheck",
     "ui:add": "bun --filter @growfuse/ui ui:add"
   },
-  "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "turbo": "^2.1.1",
-    "typescript": "^5.5.4",
-    "vite-plugin-biome": "^1.0.12"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "bun@1.1.26",
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ],
   "workspaces": [
     "apps/*",
     "packages/*",
     "tooling/*"
-  ],
-  "trustedDependencies": [
-    "@biomejs/biome"
   ]
 }
