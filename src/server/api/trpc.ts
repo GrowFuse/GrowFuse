@@ -6,9 +6,10 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { ServiceLocator } from "~/lib/service-locator";
 
 import { db } from "~/server/db";
 
@@ -96,11 +97,19 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
-/**
- * Public (unauthenticated) procedure
- *
- * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
- * guarantee that a user querying is authorized, but you can still access user session data if they
- * are logged in.
- */
+const authMiddleware = t.middleware(async ({ ctx, next }) => {
+  const authService = ServiceLocator.getService("AuthService");
+  const { user } = await authService.validateSession();
+  if (!user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  return next({
+    ctx: { ...ctx, user },
+  });
+});
+
 export const publicProcedure = t.procedure.use(timingMiddleware);
+export const protectedProcedure = publicProcedure.use(authMiddleware);

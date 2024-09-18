@@ -52,7 +52,7 @@ export default async function SignIn() {
 
         <CardFooter className="justify-center text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="#" className="underline">
+          <Link href="/signup" className="underline">
             Sign up
           </Link>
         </CardFooter>

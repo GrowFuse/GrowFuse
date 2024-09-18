@@ -51,6 +51,10 @@ export class AuthService {
     );
   }
 
+  async invalidateUserSessions(userId: string) {
+    this._lucia.invalidateUserSessions(userId);
+  }
+
   createBlankSessionCookie() {
     const blankSession = this._lucia.createBlankSessionCookie();
     return cookies().set(
@@ -93,7 +97,7 @@ interface DatabaseUserAttributes {
 
 declare module "lucia" {
   interface Register {
-    Lucia: Lucia;
+    Lucia: Lucia<Record<never, never>, DatabaseUserAttributes>;
     DatabaseUserAttributes: DatabaseUserAttributes;
   }
 }
