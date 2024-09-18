@@ -8,9 +8,8 @@ A Software which can handle different Payment Gateways in your product.
 - Next.js
 - TypeScript
 - Zod
-- Tailwind CSS
-- POSTGRESQL
-- Next-Auth
-- Prisma
+- Tailwind CSS + Shadcn
+- postgreSql
+- Lucia
 - Drizzle
 - tRPC
