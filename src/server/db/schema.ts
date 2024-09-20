@@ -4,6 +4,7 @@
 import {
   boolean,
   pgTableCreator,
+  integer,
   serial,
   text,
   timestamp,
@@ -26,8 +27,11 @@ const baseFields = {
 
 export const userTable = createTable("user", {
   ...baseFields,
-  id: text("id").primaryKey(),
+  githubId: integer("github_id").unique(),
+  name: text("name"),
   email: text("email").unique(),
+  username: text("username").unique(),
+  image: text("image"),
   emailVerified: boolean("email_verified").notNull().default(false),
   passwordHash: text("password_hash"),
 });

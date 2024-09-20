@@ -1,3 +1,5 @@
+import "server-only";
+
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia } from "lucia";
 import { cookies } from "next/headers";
@@ -66,13 +68,11 @@ export class AuthService {
 
   async validateSession() {
     const sessionId = this._getSessionId();
-
-    if (!sessionId) {
+    if (!sessionId)
       return {
         user: null,
         session: null,
       };
-    }
 
     const result = await this._lucia.validateSession(sessionId);
     try {
@@ -90,9 +90,10 @@ export class AuthService {
 interface DatabaseUserAttributes {
   name: string;
   image: string;
-  github_id: number;
+  githubId: number;
   username: string | null;
   email: string | null;
+  emailVerified: boolean;
 }
 
 declare module "lucia" {

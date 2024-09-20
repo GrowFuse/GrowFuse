@@ -1,3 +1,5 @@
+import "server-only";
+
 import { GitHub } from "arctic";
 import axios from "axios";
 import { env } from "~/env";

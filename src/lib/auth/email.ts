@@ -1,4 +1,6 @@
-import { hash, type Options, verify } from "@node-rs/argon2";
+import "server-only";
+
+import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { type User } from "lucia";
 import { isWithinExpirationDate } from "oslo";
@@ -8,20 +10,16 @@ import { db } from "~/server/db";
 import { emailVerificationCodeTable } from "~/server/db/schema";
 
 export class EmailAuthService {
-  _argon2Options: Options = {
-    memoryCost: 19456,
-    timeCost: 2,
-    outputLen: 32,
-    parallelism: 1,
-  };
+  private _saltRounds = 10;
+
   constructor() {}
 
-  async hash(password: string) {
-    return await hash(password, this._argon2Options);
+  async hash(password: string): Promise<string> {
+    return await bcrypt.hash(password, this._saltRounds);
   }
 
-  async verify(passwordHash: string, password: string) {
-    return await verify(passwordHash, password, this._argon2Options);
+  async verify(passwordHash: string, password: string): Promise<boolean> {
+    return await bcrypt.compare(password, passwordHash);
   }
 
   async generateEmailVerificationCode(userId: string, email: string) {

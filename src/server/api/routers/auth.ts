@@ -1,3 +1,5 @@
+import "server-only";
+
 import {
   emailPassSignInSchema,
   emailPassSignUpSchema,
@@ -9,7 +11,6 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "~/server/db/schema";
 import { ServiceLocator } from "~/lib/service-locator";
 import { TRPCError } from "@trpc/server";
@@ -18,38 +19,44 @@ import { eq } from "drizzle-orm";
 export const authRouter = createTRPCRouter({
   emailSignUp: publicProcedure
     .input(emailPassSignUpSchema)
-    .mutation(async ({ input: { email, password }, ctx: { db } }) => {
-      const authService = ServiceLocator.getService("AuthService");
-      const emailAuthService = ServiceLocator.getService("EmailAuthService");
+    .mutation(
+      async ({
+        input: { firstName, lastName, email, password },
+        ctx: { db },
+      }) => {
+        const authService = ServiceLocator.getService("AuthService");
+        const emailAuthService = ServiceLocator.getService("EmailAuthService");
 
-      const passwordHash = await emailAuthService.hash(password);
-      const userId = generateIdFromEntropySize(10); // 16 characters long
+        try {
+          const passwordHash = await emailAuthService.hash(password);
+          const [user] = await db
+            .insert(userTable)
+            .values({
+              name: firstName + " " + lastName,
+              email,
+              passwordHash,
+            })
+            .returning({ id: userTable.id });
 
-      try {
-        await db.insert(userTable).values({
-          id: userId,
-          email,
-          passwordHash,
-        });
-      } catch {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Email already used",
-        });
-      }
+          const code = await emailAuthService.generateEmailVerificationCode(
+            user!.id,
+            email,
+          );
 
-      const code = await emailAuthService.generateEmailVerificationCode(
-        userId,
-        email,
-      );
+          console.log(code);
+          // TODO: send code, to user email
 
-      console.log(code);
-      // TODO: send code, to user email
-
-      const session = await authService.createSession(userId);
-      authService.createSessionCookie(session.id);
-      return;
-    }),
+          const session = await authService.createSession(user!.id);
+          authService.createSessionCookie(session.id);
+          return;
+        } catch {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Email already used",
+          });
+        }
+      },
+    ),
 
   emailSignIn: publicProcedure
     .input(emailPassSignInSchema)
