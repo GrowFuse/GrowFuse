@@ -9,13 +9,20 @@ import { emailPassSignInSchema } from "~/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField } from "../ui/form";
 import { api } from "~/trpc/react";
+import { toast } from "sonner";
 
 export default function SignInForm() {
   const form = useForm<z.infer<typeof emailPassSignInSchema>>({
     resolver: zodResolver(emailPassSignInSchema),
   });
 
-  const { mutate, isPending } = api.auth.emailSignIn.useMutation();
+  const { mutate, isPending } = api.auth.emailSignIn.useMutation({
+    onSuccess: console.log,
+    onError: (err) => {
+      console.log(err);
+      toast.error(err.message);
+    },
+  });
 
   const onSubmit = (values: z.infer<typeof emailPassSignInSchema>) => {
     mutate(values);

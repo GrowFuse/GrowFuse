@@ -1,11 +1,9 @@
 "use client";
 
-import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
-import GithubLogin from "~/components/auth/github-login";
 import {
   Card,
   CardHeader,
@@ -44,20 +42,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="grid gap-y-4">
-            {children}
-
-            {isSignInPage || isSignUpPage ? (
-              <>
-                <div className="flex items-center justify-between gap-x-2">
-                  <Separator className="w-[45%]" />
-                  <p className="text-muted-foreground">or</p>
-                  <Separator className="w-[45%]" />
-                </div>
-                <GithubLogin />
-              </>
-            ) : null}
-          </CardContent>
+          <CardContent className="grid gap-y-4">{children}</CardContent>
 
           <CardFooter className="justify-center gap-x-1 text-center text-sm">
             {isSignInPage ? (
@@ -67,19 +52,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                   Sign up
                 </Link>
               </>
-            ) : isSignUpPage ? (
+            ) : (
               <>
                 Already have an account?{" "}
                 <Link href="/signin" className="underline">
                   Sign in
-                </Link>
-              </>
-            ) : (
-              <>
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                Didn't receive a code?{" "}
-                <Link href="/signup" className="underline">
-                  Resend
                 </Link>
               </>
             )}

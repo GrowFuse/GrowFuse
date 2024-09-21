@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Nunito } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "~/components/ui/sonner";
 
 const nunito = Nunito({
   weight: ["400", "700", "200", "300", "500", "600", "800", "900"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className={`${nunito.className} ${nunito.variable}`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Toaster />
       </body>
     </html>
   );

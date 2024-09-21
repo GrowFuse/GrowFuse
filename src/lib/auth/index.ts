@@ -18,11 +18,9 @@ export class AuthService {
     sessionCookie: {
       attributes: {
         secure: env.NODE_ENV === "production",
-        sameSite: "none",
         path: "/",
-        domain: env.NODE_ENV === "production" ? ".growfuse.app" : undefined,
       },
-      expires: true,
+      expires: false,
     },
     getUserAttributes: (user) => user,
   });
@@ -90,9 +88,7 @@ export class AuthService {
 interface DatabaseUserAttributes {
   name: string;
   image: string;
-  githubId: number;
-  username: string | null;
-  email: string | null;
+  email: string;
   emailVerified: boolean;
 }
 

@@ -47,4 +47,5 @@ export const emailPassSignInSchema = z.object({
 
 export const emailVerifyCodeSchema = z.object({
   code: z.string().length(6),
+  email: z.string().email(),
 });

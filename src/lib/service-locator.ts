@@ -2,11 +2,9 @@ import "server-only";
 
 import { AuthService } from "./auth";
 import { EmailAuthService } from "./auth/email";
-import { GitHubAuthService } from "./auth/github";
 
 interface ServiceMap {
   AuthService: AuthService;
-  GitHubAuthService: GitHubAuthService;
   EmailAuthService: EmailAuthService;
 }
 
@@ -22,7 +20,6 @@ export class ServiceLocator {
   } = {
     AuthService: () => new AuthService(),
     EmailAuthService: () => new EmailAuthService(),
-    GitHubAuthService: () => new GitHubAuthService(),
     // CollectionsService: () => {
     //   const collectionsRepository = ServiceLocator.getOrCreateRepository(
     //     "CollectionsRepository",

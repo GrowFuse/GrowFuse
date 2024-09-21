@@ -4,7 +4,6 @@
 import {
   boolean,
   pgTableCreator,
-  integer,
   serial,
   text,
   timestamp,
@@ -16,21 +15,19 @@ import { createDate } from "oslo";
 export const createTable = pgTableCreator((name) => `growfuse_${name}`);
 
 const baseFields = {
-  id: uuid("id").defaultRandom().notNull().primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
     .notNull()
     .defaultNow(),
-  updatedAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
     .notNull()
     .$onUpdateFn(() => new Date()),
 };
 
 export const userTable = createTable("user", {
   ...baseFields,
-  githubId: integer("github_id").unique(),
   name: text("name"),
-  email: text("email").unique(),
-  username: text("username").unique(),
+  email: text("email").notNull().unique(),
   image: text("image"),
   emailVerified: boolean("email_verified").notNull().default(false),
   passwordHash: text("password_hash"),
@@ -43,9 +40,9 @@ export const emailVerificationCodeTable = createTable(
     expiresAt: timestamp("expires_at", { withTimezone: true, mode: "date" })
       .notNull()
       .$defaultFn(() => createDate(new TimeSpan(15, "m"))),
-    userId: text("user_id")
+    userId: uuid("user_id")
       .notNull()
-      .references(() => userTable.id),
+      .references(() => userTable.id, { onDelete: "cascade" }),
     email: text("email"),
     code: text("code"),
   },
@@ -53,9 +50,9 @@ export const emailVerificationCodeTable = createTable(
 
 export const sessionTable = createTable("session", {
   id: text("id").primaryKey(),
-  userId: text("user_id")
+  userId: uuid("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => userTable.id, { onDelete: "cascade" }),
   expiresAt: timestamp("expires_at", {
     withTimezone: true,
     mode: "date",

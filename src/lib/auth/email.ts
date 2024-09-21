@@ -1,13 +1,23 @@
 import "server-only";
 
-import bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { type User } from "lucia";
 import { isWithinExpirationDate } from "oslo";
 
 import { generateRandomString, alphabet } from "oslo/crypto";
 import { db } from "~/server/db";
 import { emailVerificationCodeTable } from "~/server/db/schema";
+
+interface User {
+  id: string;
+  name: string | null;
+  email: string;
+  image: string | null;
+  emailVerified: boolean;
+  passwordHash: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export class EmailAuthService {
   private _saltRounds = 10;
