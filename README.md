@@ -1,7 +1,6 @@
 ## GrowFuse
 
-A Software which can handle different Payment Gateways in your product.
-
+A software that simplifies the integration of multiple payment gateways
 
 ## Primary Tech Stack
 
